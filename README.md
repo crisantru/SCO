@@ -1,4 +1,4 @@
-# SISTEMA DE ASUNTOS CIVILES, ESPECIALES Y PENALES Django
+# SISTEMA DE ASUNTOS CIVILES, ESPECIALES Y PENALES (Django)
 > Descripción: Plataforma web para la derivación de correspondencia.
 - Herramientas utilizadas:
   1. Framework: Django
@@ -10,4 +10,5 @@
         * Ajax
         * JSON
         * XML
+        * Boostrap
         
