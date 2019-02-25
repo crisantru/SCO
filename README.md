@@ -36,7 +36,7 @@
 
 ### Gestión Oficio
 <p align="center">
-  <img width="720" height="320" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076498/images/sacep/9.png">
+  <img width="720" height="480" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076498/images/sacep/9.png">
 </p>
 
 ### Buscar Oficio
