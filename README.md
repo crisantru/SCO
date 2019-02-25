@@ -3,5 +3,11 @@
 - Herramientas utilizadas:
   1. Framework: Django
   2. Lenguajes
-        *Python
+        * Python
         * Javascript
+  3. Librerias
+        * JQuery
+        * Ajax
+        * JSON
+        * XML
+        
