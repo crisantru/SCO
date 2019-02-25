@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style >
+  .error {
+    color: #F00;
+    background-color: #FFF;
+    }
+
+  div .label{
+    width: 20%;
+    padding: 10px;
+    display: inline-block;
+    font-weight: bold;
+  }
+  .input{
+    width: 30%;
+    padding: 10px;
+    display: inline-block;
+  }
+
+</style>
+
+<br>
+  <div class="container-fluid">
+    <h2>Datos Generales de Informe de Autoridad</h2>
+    <hr>
+    <div class="alert alert-primary" role="alert">
+      <h3>Oficio N°: {{document.num_folio}}/{{document.consecutive}}</h3>
+      <p><strong>De Quien se Solicita la Información:  </strong><strong style="font-size: 1.5em">{{document.name_person}}</strong><br>
+         <strong>Tipo de Oficio: </strong>{{document.type.name}}<br>
+         <strong>Autoridad: </strong><strong style="font-size: 1em">{{document.authority.name_authority}}</strong><br>
+         <strong>Derivado a: </strong>{{document.process.derivate_area}}
+       </p>
+      <hr>
+      <p class="mb-0">
+        <!--<strong>Fecha de Entrega: </strong>{{document.process.date_delivery}}<br>
+        <strong>N° de Control Interno: </strong>{{document.type.internal_control}}<br>--></p>
+    </div><br>
+    <hr>
+    <h2>Datos Especificos para Generar PDF</h2><br>
+  </div>
+
+  <div class="container-fluid" id="pensiones_alimenticias">
+    <form action="{% url 'document_generate_pdf' document.id_document %}" id="generate-informeA" class="" method="post">
+      {% csrf_token%}
+      <div class="label">Fecha de Redacción: </div>
+      <div class="input"><input id="datepicker" width="50%" name="date_redaction"/></div><br>
+      <div class="label">Expediente: </div>
+      <div class="input"><input class="validate form-control col-sm-11" type="text" name="judge_type" value=""></div><br>
+      <div class="label">Resultado del Informe: </div>
+      <div class="input">
+        <select class="validate form-control col-sm-11" name="info_answer" id="info_answer">
+          <option value="0">Seleccione un Elemento </option>
+          <option value="1">No se Localizo Información</option>
+          <option value="2">Se Localizo Información C/Certeza</option>
+          <option value="3">Se Localizo Información S/Certeza</option>
+          <option value="4">Respuesta Extendida</option>
+        </select>
+      </div>
+      <hr>
+      <div class=""  id="final_content" style="width: 100%">
+        <!--<textarea style="resize: none;" rows="10" cols="90" name="observaciones" class="validate form-control">
+        </textarea>-->
+      </div>
+      <br>
+      <div>
+        <button class="btn btn-success" type="submit" style="width:15%"><i class="far fa-save fa-1x"></i> Generar PDF</button>
+      </div>
+    </form>
+  </div>
+
+
+  <br><br><br><br>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+
+  $('#datepicker').datepicker({
+      //uiLibrary: 'bootstrap3',
+      format: 'yyyy-dd-mm',
+      //locale: 'es-es',
+    });
+
+    window.onload = function(){
+      info_answer = document.getElementById('info_answer');
+
+      info_answer.addEventListener('change', function(){
+        console.log(info_answer.value);
+        //for select type answer
+        if(info_answer.value == "2" || info_answer.value == "3"){
+          if(document.getElementById('respuestaInformeA')){
+            return;
+          }else{
+            let document_answer = "{{form.document_answer|escapejs}}"
+            var respuestaInformeA = document.createElement("DIV");
+            respuestaInformeA.setAttribute("id", "respuestaInformeA");
+            respuestaInformeA.innerHTML = "<div class="+"label"+">Respuesta: </div><br>"
+            //+ "<div><p><strong>Fecha de Entrega del Oficio: </strong>" + today + "</p></div>"
+            //+ "<div><p><strong>Fecha de Entrega del Oficio: </strong>" +  + "</p></div>"
+            //+ "<input style='"  + "resize: none;'"+" rows="+"10"+" cols="+"90"+" name='" + "observaciones' "
+            //+ "class='" + "validate form-control" + "'>";
+            + "<div class="+""+">" + document_answer + "</div>";
+
+            insertAfter(final_content, respuestaInformeA);
+          }
+        }
+        else{
+          if(document.getElementById('respuestaInformeA')){
+            final_content.nextElementSibling.remove();
+          }
+        }
+
+      });
+
+      function insertAfter(e,i){
+    			if(e.nextSibling){
+    					e.parentNode.insertBefore(i,e.nextSibling);
+    			} else {
+    					e.parentNode.appendChild(i);
+    			}
+    	}
+
+    }
+
+
+
+
+  </script>
+  {% load static %}
+  <!--SCRIPT VALIDATES FIELDS-->
+	<script type="text/javascript" src="{% static '/sco/js/jquery-1.11.0.min.js' %}"></script>
+	<!--<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>-->
+	<script type="text/javascript" src="{% static '/sco/js/jquery.validate.min.js' %}"></script>
+	<!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js" charset="utf-8"></script>-->
+	<script type="text/javascript" src="{% static '/sco/js/jquery-1.11.0.additional-methods.js' %}" charset="utf-8"></script>
+	<!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.js" charset="utf-8"></script>-->
+	<script type="text/javascript" src="{% static '/sco/js/validator_messages_es.js' %}"></script>
+	<script type="text/javascript" src="{% static '/sco/js/validate-form-generate-informeA.js' %}"></script>
+{% endblock %}

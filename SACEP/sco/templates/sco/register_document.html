@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block head %}
+	<title>Registrar Oficio</title>
+
+{% endblock %}
+
+{% block body %}
+	<style >
+		.error {
+			color: #F00;
+			background-color: #FFF;
+			}
+
+			div .label{
+				//padding: 0 2px 1px 6px;
+			  //border: 1px solid orange;
+				width: 18%;
+				padding: 10px;
+				display: inline-block;
+				font-weight: bold;
+			}
+			.input{
+				width: 25%;
+				padding: 10px;
+				display: inline-block;
+				//border: 1px solid orange;
+		}
+
+		h5{
+			text-align: center;
+			font-size:160%;
+			color:green;
+		}
+
+	</style>
+
+	<div class="container-fluid">
+		<strong><h5>DATOS DEL OFICIO</h5></strong>
+		<hr>
+		<form action="{% url 'register_document' %}" id="post_document" class="form-horizontal" method="post">
+			{% csrf_token%}
+			<div class="container-fluid"style="">
+				<div class="container-fluid" id="datos_oficio">
+					<div class="label">{{ form1.name_person.label_tag }}</div>
+					<div class="input">{{ form1.name_person }}</div><br>
+					<div class="label">{{ form1.num_folio.label_tag }}</div>
+					<div class="input" style="width:10%; padding:10px;">{{ form1.num_folio }}</div>
+					<div class="input" style="width:20%; padding:0px;">{{ form1.consecutive }}</div><br>
+					<!-- categoria de oficios -->
+					<div class="label">{{ form2.name.label_tag}}</div>
+					<div class="input">{{ form2.name}}</div><br>
+					<div class="label">Submateria</div>
+					<div class="input"><select class="validate form-control" name="subtype"
+						value="None" disabled="true" onclick="submaterias()" id="subMaterias"></select></div>
+					<div class="label">Limite de Respuesta (Días):</div>
+					<div class="input"><input type="text" name="limit_answer" value="" class="validate form-control"
+					id="limite_respuesta" readonly=True style="width:40%;"></div><br>
+					<div class="label">Fecha de Termino: </div>
+					<div class="input">{{form2.date_answer}}</div><br>
+					<div class="label">{{form3.name_authority.label_tag }}</div>
+					<div class="input" style="width: 81%">
+						<select style="font-size: 14px;" class="validate form-control col-sm-4" name="name_authority">
+								<option value="Seleccion">Selecciona un elemento</option>
+							{% for field in authorities %}
+								<option value="{{field.name_authority}}">{{field.name_authority}}</option>
+							{% endfor %}
+						</select>
+					</div><br>
+				</div>
+				<div id="final_content"></div>
+				<br>
+				<div class="container-fluid" id="datos_proceso">
+					<strong><h5>PROCESO DEL OFICIO</h5></strong>
+					<hr>
+					<div class="label">{{form4.status.label_tag}}</div>
+					<div style="width: 31%;" class="input">{{form4.status}}</div><br>
+					<div class="label">{{form4.manager_process.label_tag}}</div>
+					<div class="input">{{form4.manager_process}}</div><br>
+					<div class="label">{{form4.derivate_area.label_tag}}</div>
+					<div class="input">{{form4.derivate_area}}</div><br>
+					<!--<div class="label">{{form4.observations.label_tag}}</div>
+					<div style="width: 80%;" class="input">{{form4.observations}}</div>-->
+				</div>
+			</div>
+			<hr>
+			<br>
+			<button class="btn btn-success" type="submit" style="width:15%"><i class="far fa-save fa-1x"></i> Guardar</button>
+			<br><br><br>
+	</div>
+	{% load static %}
+
+
+
+	<!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+	<script type="text/javascript" src="{% static '/sco/js/jquery-3.3.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static '/sco/js/document_register.js' %}"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+	<!--<script type="text/javascript" src="{% static '/sco/js/jquery-1.12.4.js' %}"></script>-->
+  <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+	<!--<script type="text/javascript" src="{% static '/sco/js/jquery-ui.js' %}"></script>-->
+	<!--<script type="text/javascript" src="{% static '/sco/js/document_register_autocomplete.js' %}"></script>-->
+	<script type="text/javascript">
+
+			/*var $k = jQuery.noConflict();
+			alert("Version: "+$.fn.jquery);
+			$k(document).ready(function(){
+
+				$k(function(){
+					 $k("#authority_name").autocomplete({
+						source: "{% url 'get_authorities' %}",
+						select: function (event, ui) { //item selected
+							AutoCompleteSelectHandler(event, ui)
+						},
+						minLength: 1,
+					});
+				 });
+
+				function AutoCompleteSelectHandler(event, ui){
+						var selectedObj = ui.item;
+					}
+			});*/
+
+			window.onload = function(){
+
+					var materia = document.getElementById("Materias");
+					var submateria = document.getElementById("subMaterias");
+
+
+					materia.addEventListener('change', function(){
+
+						if(document.getElementById('datosPensiones')){
+							final_content.nextElementSibling.remove();
+						}
+
+						if(materia.value == "Pensiones_Alimenticias"){
+							//alert("entra a nuevo div");
+							let final_content = document.getElementById("final_content");
+							let juicio_ord = "{{form5.ordinary_judg|escapejs}}"
+							let beneficiary = "{{form5.beneficiary|escapejs}}"
+							let disposition_type = "{{form5.disposition_type|escapejs}}"
+							let pension_type = "{{form5.pension_type|escapejs}}"
+							let date_efect = "{{form5.date_efect|escapejs}}"
+
+							//DIV
+							var divDatosPensiones = document.createElement("DIV");
+							divDatosPensiones.setAttribute("class", "container-fluid");
+							divDatosPensiones.setAttribute("id", "datosPensiones");
+							divDatosPensiones.innerHTML = "<br><h5>DATOS PROPIOS DEL OFICIO<br>(PENSIONES ALIMENTICIAS)</h5><hr>"
+							+ "<div class=" + "label" + ">Juicio Ordinario: </div>"
+							+ "<div class=" + "input" + ">" + juicio_ord + "</div>"
+							+ "<div class=" + "label" + ">Beneficiario: </div>"
+							+ "<div class=" + "input" + ">" + beneficiary + "</div>"
+							+ "<div class=" + "label" + ">Tipo de Disposición: </div>"
+							+ "<div class=" + "input" + ">" + disposition_type + "</div>"
+							+ "<div class=" + "label" + ">Tipo de Pensión: </div>"
+							+ "<div class=" + "input" + ">" + pension_type + "</div>"
+							+ "<br><br><br>";
+							insertAfter(final_content, divDatosPensiones);
+
+						}else{
+							//final_content.nextElementSibling.remove();
+						}
+					});
+
+					function insertAfter(e,i){
+							if(e.nextSibling){
+									e.parentNode.insertBefore(i,e.nextSibling);
+							} else {
+									e.parentNode.appendChild(i);
+							}
+					}
+				}
+		</script>
+
+
+	<!--SCRIPT VALIDATES FIELDS-->
+	<script type="text/javascript" src="{% static '/sco/js/jquery-1.11.0.min.js' %}"></script>
+	<!--<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>-->
+	<script type="text/javascript" src="{% static '/sco/js/jquery.validate.min.js' %}"></script>
+	<!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js" charset="utf-8"></script>-->
+	<script type="text/javascript" src="{% static '/sco/js/jquery-1.11.0.additional-methods.js' %}" charset="utf-8"></script>
+	<!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.js" charset="utf-8"></script>-->
+	<script type="text/javascript" src="{% static '/sco/js/validator_messages_es.js' %}"></script>
+	<script type="text/javascript" src="{% static '/sco/js/validate_form_document.js' %}"></script>
+
+
+{% endblock %}

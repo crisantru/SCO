@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container-fluid">
+  <br><h1>Materias Penales</h1>
+
+  <br><br><br>
+  <a class = "btn btn-outline-success" href="/sco/registrar_materia/">Nueva Materia Penal</a>
+  <br><br>
+  <!--<a class="btn btn-info" href="/sco/registrar_autoridad/">Nuevo Autoridad</a>-->
+
+  <table class="table table-striped table-hover ">
+    <tr>
+      <th class = "table-success">#</th>
+      <th class = "table-success"># de Control Interno</th>
+      <th class = "table-success">Nombre</th>
+      <th class = "table-success">Termino(dias)</th>
+    </tr>
+
+  {% for field in object_list %}
+    <tr>
+      <td>{{field.id_type}}</td>
+      <td>{{field.name}}</td>
+      <td>{{field.end_days}}</td>
+
+      <!--<td class="table-danger"><a href="{% url 'authority_detail' field.id %}">Detalles</a></td>-->
+      <td class="table-success"><a href="{% url 'type_edit' field.id_type %}">Editar</a></td>
+      <td class="table-success"><a href="{% url 'type_delete' field.id_type %}">Eliminar</a></td>
+    </tr>
+
+  {% endfor %}
+  </table>
+</div>
+
+{% endblock %}

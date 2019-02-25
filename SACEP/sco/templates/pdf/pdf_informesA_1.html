@@ -1,0 +1,181 @@
+<!--<h3>Sales Report - {{ today | date:"d/m/Y" }}</h3>-->
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Oficio N° {{document.num_folio}} {{document.name_person}}</title>
+    <style type="text/css">
+        @page {
+            size: Letter;
+            margin-top: 2cm;
+            margin-bottom: 2cm;
+            margin-left: 2cm;
+            margin-right: 2cm;
+        }
+    </style>
+    <style type="text/css">
+      @page{
+        @frame layout{
+          -pdf-frame-content: frame;
+          margin-top: 1.8cm;
+          margin-bottom: 1.7cm;
+          margin-left: 2cm;
+          margin-right: 1.6cm;
+        }
+        @frame top-title-left{
+          -pdf-frame-content: top-title-left;
+          margin-top: 1.8cm;
+          margin-bottom: 23cm;
+          margin-left: 2cm;
+          margin-right: 17cm;
+        }
+        @frame title-content{
+          -pdf-frame-content: title-content;
+          margin-top: 2.1cm;
+          margin-left: 4.5cm;
+          margin-right: 10.6cm;
+          margin-bottom: 19cm;
+
+        }
+        @frame top-title-right{
+          -pdf-frame-content: top-title-right;
+          margin-top: 1.8cm;
+          margin-bottom: 23.7cm;
+          margin-right: 1.6cm;
+          margin-left: 13cm;
+        }
+        @frame date{
+          -pdf-frame-content: date;
+          margin-top: 5cm;
+          margin-right: 1.6cm;
+          margin-left: 13cm;
+        }
+        @frame authority{
+          -pdf-frame-content: authority;
+          margin-top: 7.5cm;
+          margin-right: 9.3cm;
+          margin-left: 2cm;
+        }
+        @frame type{
+          -pdf-frame-content: type;
+          margin-top: 9.3cm;
+          margin-right: 1.6cm;
+          margin-left: 12.5cm;
+        }
+        @frame content{
+          -pdf-frame-content: content;
+          margin-top: 10.5cm;
+          margin-right: 1.6cm;
+          margin-left: 2cm;
+        }
+        @frame content2{
+          -pdf-frame-content: content2;
+          margin-top: 13.5cm;
+          margin-right: 1.6cm;
+          margin-left: 2cm;
+        }
+        @frame content3{
+          -pdf-frame-content: content3;
+          margin-top: 15.5cm;
+          margin-right: 1.6cm;
+          margin-left: 2cm;
+        }
+        @frame content4{
+          -pdf-frame-content: content4;
+          margin-top: 18.5cm;
+          margin-right: 1.6cm;
+          margin-left: 2cm;
+        }
+        @frame content5{
+          -pdf-frame-content: content5;
+          margin-top: 23.5cm;
+          margin-right: 1.6cm;
+          margin-left: 2cm;
+        }
+      }
+
+    </style>
+</head>
+<body>
+  <div id="frame">
+    <div id="top-title-left">
+      <div>
+        {% load static %}
+        <img src="{% static "sco/images/imss.jpeg" %}"  style="height: 100px; width: 100px;">
+      </div>
+    </div>
+    <div id="title-content" style="font-size: 12px; line-height: 1.2;">
+      <strong>Delegación Regional Veracruz Norte<br>
+      Jefatura de Servicios Jurídicos<br>
+      Departamento Contencioso<br>
+      Oficina de Juicios Civiles, Asuntos<br>
+      Especiales y Penales</strong>
+      <br><br>
+    </div>
+    <div id="top-title-right">
+      <div>
+        {% load static %}
+        <img src="{% static "sco/images/instituto.png" %}"  style="height: 80px; width: 250px;">
+      </div>
+    </div>
+    <div id="date" style="text-align: right; font-size: 16px; line-height: 1.2;">
+      <strong>Xalapa, Ver., a {{date_redaction|date:" d F Y"}}<br>
+      Oficio 31 02 22 4100/JC/{{document.num_folio_anwser}}/18<br>
+      C.I. {{document.type.informeA.internal_control}}/18</strong>
+      <br><br>
+    </div>
+    <div id="authority" style="font-size: 16px; line-height: 1.2;">
+      <strong>C. {{document.authority.name_authority}}</strong><br>
+        {% if document.authority.city == "OTROS..." %}
+          <strong>{{document.authority.address}}</strong><br>
+        {% else %}
+          Presente
+        {% endif %}
+    </div>
+    <div id="type" style="font-size: 16px; text-align: right;">
+      <strong><u>{{judge_type}}</u></strong><br>
+    </div>
+    <div id="content" style="font-size: 16px;
+     text-align: justify; text-justify: inter-word; line-height: 1.2;">
+      El que suscribe Lic. Marco Antonio Madrid Valencia, Encargado de Despacho del
+      Departamento Contencioso de la Jefatura de Servicios Jurídicos del Instituto Mexicano
+      del Seguro Social Delegación Regional Veracruz Norte, con Fundamento en los Artículos
+      144 Fracción I; 145 y 155 Fracción XXX del Reglamento Interior del Instituto Mexicano
+      del Seguro Social, en atención a <strong>su oficio {{document.num_folio}}</strong> me permito informar lo siguiente:
+      <br>
+    </div>
+    <div id="content2" style="font-size: 16px; text-align: justify;
+     text-justify: inter-word; line-height: 1.2;">
+      Después de haber realizado la búsqueda en las fuentes de información de esta
+      Delegación Regional Veracruz Norte con el nombre proporcionado de la <b>C. {{document.name_person}}, </b>
+      no se localizó registro alguno.
+      <br>
+    </div>
+    <div id="content3" style="font-size: 16px; text-align: justify;
+     text-justify: inter-word; line-height: 1.2;">
+      Así mismo, hago de su conocimiento que para realizar busqueda exhaustiva en los sistemas del instituto
+      es menester contar con mayores datos, como son: Número de Seguridad Social, CURP, fecha y lugar
+      de Nacimiento por cuanto hace a las personas fisicas, toda que son requisito indispensable, amén que
+      de existir homonimas se corre el riesgo de proporcionarle información de personas diversas.
+    </div>
+    <div id="content4" style="font-size: 16px; line-height: 1.2;">
+      Sin otro asunto sobre el particular, reciba un cordial saludo.
+      <p style="padding: 3px; line-height: 1.2; text-align: center;"><strong>Atentamente.<br>
+      <br>_______________________________<br>Lic. Marco Antonio Madrid Valencia.</strong><br>Jefe del Departamento Contencioso.</p>
+    </div>
+    <div id="content5" style="font-size: 10px; line-height: 1.2";>
+      C.c.p.- Expediente de Informes Autoridad C.I. {{document.type.informeA.internal_control}}/18<br>
+      C.c.p.- Minutario de la Oficina de Juicios Civiles, Asuntos Especiales y Penales.
+      <p style=" text-align: right;"><strong>LIC. ROGC / RAV</strong></p>
+      <br><br>
+      <hr>
+    </div>
+  </div>
+
+
+
+
+
+
+</body>
+</html>

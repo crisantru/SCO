@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style >
+  div .label{
+    //padding: 0 2px 1px 6px;
+    //border: 1px solid orange;
+    width: 10%;
+    padding: 15px;
+    display: inline-block;
+    font-weight: bold;
+  }
+  .input{
+    width: 20%;
+    padding: 10px;
+    display: inline-block;
+    //border: 1px solid orange;
+  }
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <br>
+  <h2 style="color: gray">Mi Correspondecia</h2>
+  <hr>
+  <form class="" action="{% url 'search' %}" method="get" id="search_document">
+    <div class="label">Correspondecia: </div>
+    <div class="input">
+      <select name="manager_process" id="manager_process"  class="validate form-control" style="width:100%">
+        <option value="Seleccion" selected="">Seleccione un elemento</option>
+        <option value="Lic. Olivia">Lic. Olivia</option>
+        <option value="Lic. Yair">Lic. Yair</option>
+        <option value="Lic. Abad">Lic. Abad</option>
+      </select>
+    </div>
+
+    <div style="width: 6%;" class="label">STATUS: </div>
+    <div class="input">
+      <select name="status" id="status"  class="validate form-control" style="width:100%">
+        <option value="Seleccion" selected="">Seleccione un elemento</option>
+        <option value="Turnado">Turnado</option>
+        <option value="Turnado/Area">Turnado/Area</option>
+        <option value="Respuesta/Area">Respuesta/Area</option>
+        <option value="En Juicio">En Juicio</option>
+        <option value="Concluido">Concluido</option>
+      </select>
+    </div><br>
+    <div class="label"></div>
+    <div class="input">
+      <button class="btn btn-success" style="width: 100%" type="submit" name="" >
+        <i class="fas fa-search"></i> Obtener</button>
+    </div>
+  </form>
+  <div class="label"></div>
+  <div class="input">
+  	<button class="btn btn-info" id="cleaner" style="width: 100%" type="submit" name="" ><i class="fas fa-broom"></i> Limpiar Busqueda</button>
+  </div>
+  <hr>
+  <div class="container-fluid">
+  	<h2 style="color:green">Oficios</h2>
+  	<table style="font-size: 85%; text-align: center;" class="table table-striped table-hover" id="table-search">
+  		<thead style="text-align: center;">
+  			<th class = "table-success">#</th>
+  			<th class = "table-success">N° Oficio</th>
+  			<th class = "table-success">Nombre</th>
+  			<th class = "table-success">Responsable Tramite</th>
+  			<th class = "table-success">Derivado A:</th>
+  			<th class = "table-success">Tipo de Oficio</th>
+  			<th class = "table-success">Limite de Entrega</th>
+  			<th class = "table-success">STATUS</th>
+  			<th class = "table-success">Ver Más</th>
+  			<th class = "table-success">Editar</th>
+  			<th class = "table-success">Actualizar</th>
+  			<th class = "table-success">Generar PDF</th>
+  		</thead>
+  		<tbody></tbody>
+  	</table>
+  </div>
+
+
+</div>
+
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+{% load static %}
+<script type="text/javascript" src="{% static '/sco/js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static '/sco/js/document_search.js' %}"></script>
+{% endblock %}

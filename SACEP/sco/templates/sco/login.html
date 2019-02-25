@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+    <meta charset="utf-8">
+    <title></title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/sco/css/bootstrap.min.css' %}">
+
+  </head>
+
+  <body>
+    <style media="screen">
+      .login{
+
+        border: double;
+        border-color: #204E0D;
+        height: 100%px;
+        width: 30%;
+        position: relative;
+        left: 35%;
+        top: 20px;
+      }
+
+      .center {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 10%;
+      }
+    </style>
+
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #004A3D;" >
+      <a class="navbar-brand" >
+	 			<img src="{% static "sco/images/imss.jpeg" %}" width="30" height="30" alt="">
+ 			</a>
+      <a class="navbar-brand" href="#">OFICINA DE JUICIOS CIVILES, ASUNTOS ESPECIALES Y PENALES</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+    <br>
+    <h1 style="text-align:center">SISTEMA DE ASUNTOS CIVILES, ESPECIALES Y PENALES</h1>
+    <img  class="center" src="{% static "sco/images/imss.jpeg" %}" alt="">
+    <br><br>
+    <h2 style="text-align:center">Bienvenido</h2>
+
+    <div class="login">
+        <form method="post">
+          {% csrf_token%}
+          <label style="margin-left:10px;" for="exampleInputEmail1">Correo</label>
+					{{ form.username}}
+          <br>
+          <label style="margin-left:10px;" for="exampleInputPassword1">Contraseña</label>
+          {{form.password}}
+          <br>
+          <button type="submit" class="btn btn-success" style="width:50%; margin-left:110px">Iniciar</button>
+        </form>
+        <br>
+    </div><br><br><br>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/sco/js/bootstrap.min.js' %}">
+    <link rel="stylesheet" href="{% static '/sco/js/jquery-3.3.1.slim.min.js' %}">
+    <link rel="stylesheet" href="{% static '/sco/js/popper.min.js' %}">
+  </body>
+</html>

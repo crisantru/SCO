@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container-fluid">
+  <br><h1>Usuarios</h1>
+
+  <br><br><br>
+  <a class = "btn btn-outline-success" href="/sco/registrar_usuario/">Nuevo Usuario</a>
+  <br><br>
+  <!--<a class="btn btn-info" href="/sco/registrar_autoridad/">Nuevo Autoridad</a>-->
+
+  <table class="table table-striped table-hover ">
+    <tr>
+      <th class = "table-success">#</th>
+      <th class = "table-success">Username</th>
+      <th class = "table-success">Nombre</th>
+      <th class = "table-success">Correo</th>
+      <th class = "table-success">Ultima Sesión</th>
+    </tr>
+
+  {% for field in object_list %}
+    <tr>
+      <td>{{field.id}}</td>
+      <td>{{field.username}}</td>
+      <td>{{field.name}} {{field.lastNameP}} {{field.lastNameM}}</td>
+      <td>{{field.email}}</td>
+      <td>{{field.last_login}}</td>
+
+      <!--<td class="table-danger"><a href="{% url 'authority_detail' field.id %}">Detalles</a></td>,-->
+      <!--<td class="table-success"><a href="{% url 'authority_edit' field.id %}">Editar</a></td>-->
+      <td class="table-success"><a href="{% url 'user_delete' field.id %}">Eliminar</a></td>
+    </tr>
+
+  {% endfor %}
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% block head %}
+	<title>Actualizar Status Oficio</title>
+{% endblock %}
+
+{% block body %}
+	<style>
+		.error {
+			color: #F00;
+			background-color: #FFF;
+			}
+	</style>
+  <br>
+  <div class="container">
+    <div>
+      <h2><strong>Actualizar Estado del Oficio</strong></h2>
+      <hr>
+      <p class="alert alert-success" role="alert" style="font-size: 35">
+				<strong>Oficio No. </strong>{{document.num_folio}}/{{document.consecutive}}</p>
+      <p style="font-size: 20"><strong>Quien Solicita la Información: </strong>{{document.name_person}}<br>
+
+        <strong>Tipo de Oficio: </strong>{{document.type.name}}<br>
+				{% if document.type.name == "Pensiones_Alimenticias" %}
+					<strong>Beneficiario(a): </strong>{{document.type.pension.beneficiary}}<br>
+					<strong>Submateria: </strong>{{document.type.pension.pension_type}}<br>
+				{% endif %}
+    </div>
+    <hr><br>
+    <form action="{% url 'document_update' document.id_document %}" id="form-update" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div>
+        <!--<h2><strong>Estado del Oficio</strong></h2>-->
+        <p class="alert alert-success" role="alert" style="font-size: 35"><strong>STATUS Actual del OFICIO: </strong>{{document.process.status}}</p>
+        <hr>
+        <div><p><strong>Cambiar STATUS A: </strong>{{form3.status}}</p></div>
+        <div ><p><strong>{{form3.answer.label_tag}} </strong>{{form3.answer}}</p></div>
+      </div>
+      <hr>
+      <br>
+      <div id="final_content"></div>
+      <div>
+        <button class="btn btn-success" type="submit" style="width:15%"><i class="far fa-save fa-1x"></i> Guardar</button>
+      </div>
+    </form>
+		{% if uploaded_file_url %}
+			<div class="alert alert-success" role="alert">
+				Archivo Subido Exitosamente
+				<p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+			</div>
+		{% endif %}
+    <br>
+    <br>
+    <br>
+  </div>
+
+<script type="text/javascript">
+	//windows.load necesario para que se ejecute addEventListener
+	//script esta siendo ejecutado antes de que se termine de renderizar
+	//el html
+	 window.onload = function(){
+
+		var status = document.getElementById("id_status");
+		//var answer = document.getElementById("id_answer");
+		var final_content = document.getElementById("final_content");
+		var divOficioElaborado = document.getElementById("oficioElaborado");
+		var divOficioEntregado = document.getElementById("oficioEntregado");
+
+	  var file_pdf = "{{form1.file_pdf|escapejs}}";
+		var num_folio_anwser = "{{form1.num_folio_anwser|escapejs}}";
+		var internal_control = "{{form2.internal_control|escapejs}}";
+		//Respuesta para Status Respuest/Area
+		var observations = "{{form3.observations|escapejs}}";
+		var date_delivery = "{{form3.date_delivery|escapejs}}";
+		var document_answer = "{{form2.document_answer|escapejs}}";
+		let document_type = "{{document.type.name}}";
+
+		if(document_type != "Pensiones_Alimenticias"){
+			console.log("print status especial");
+			let option1 = document.createElement("option");
+			let option2 = document.createElement("option");
+			option1.text = "En Juicio";
+			option2.text = "Concluido";
+			status.add(option1);
+			status.add(option2);
+			//answer.setAttribute("disabled", "true");
+		}
+
+		if(document_type == "Pensiones_Alimenticias"){
+			status.remove(3);
+			status.remove(3);
+			let option1 = document.createElement("option");
+			let option2 = document.createElement("option");
+			option1.text = "Turnado/Area/Informe";
+			option2.text = "Enviado/Autoridad";
+			status.add(option1);
+			status.add(option2);
+		}
+
+		status.addEventListener('change',function() {
+				console.log(status.value);
+
+				if(status.value == "Turnado" || status.value == "En Juicio" || status.value == "Concluido"){
+					console.log("entra a turnado");
+					if(document.getElementById("oficioElaborado") || document.getElementById("oficioEntregado")){
+						console.log("entra a delete");
+						final_content.nextElementSibling.remove();
+					}
+					//answer.setAttribute("disabled", "true");
+				}else if(status.value == "Turnado/Area"){
+					console.log("entra Turnado/Area");
+					//answer.removeAttribute("disabled");
+					if(document.getElementById("oficioElaborado") || document.getElementById("oficioEntregado")){
+						console.log("entra a delete");
+						final_content.nextElementSibling.remove();
+					}
+
+				}else if(status.value == "Respuesta/Area"){
+					console.log("entra Respuesta/Area");
+					if(document.getElementById("oficioEntregado")){
+						console.log("entra a delete");
+						final_content.nextElementSibling.remove();
+					}
+					if(document.getElementById("oficioElaborado")){
+						return;
+					}else{
+						var divOElaborado = document.createElement("DIV");
+						divOElaborado.setAttribute("id", "oficioElaborado");
+						divOElaborado.innerHTML = "<h2><strong>Respuesta a la Autoridad/Areas</strong></h2><hr>"
+						//+ "<div><p><strong>N° de Oficio de Respuesta: </strong>" + num_folio_anwser + "</p></div>"
+						//+ "<div><p><strong>N° de Control Interno: </strong>" + internal_control + "</p></div>"
+						+ "<div><p><strong>Adjuntar Archivo PDF: </strong>" + file_pdf + "</p></div>"
+						+ "<div><p><strong>Observaciones: </strong>" + observations + "</p></div>";
+						insertAfter(final_content, divOElaborado);
+					};
+				}else if(status.value == "Enviado/Autoridad"){
+					if(document.getElementById("oficioElaborado")){
+						console.log("entra a delete");
+						final_content.nextElementSibling.remove();
+					}
+					//answer.setAttribute("disabled", "true");
+
+					if(document.getElementById("oficioEntregado")){
+						return;
+					}else{
+						var today = new Date();
+						today = today.toISOString().substring(0, 10);
+
+						var divOEntregado = document.createElement("DIV");
+						divOEntregado.setAttribute("id", "oficioEntregado");
+						divOEntregado.innerHTML = "<h2><strong>Datos de la Entrega Autoridad/Areas</strong></h2><hr>"
+						+ "<div><p><strong>Fecha de Entrega del Oficio: </strong>" + today + "</p></div>";
+						//+ "<div><p><strong>Fecha de Entrega del Oficio: </strong>" +  + "</p></div>"
+						//+ "<div><p><strong>Anotaciones: </strong>" + observations + "</p></div>";
+
+						if(document_type == "Pensiones_Alimenticias"){
+							divOEntregado.innerHTML = "<h2><strong>Datos de la Entrega Autoridad/Areas</strong></h2><hr>"
+							//+ "<div><p><strong>Fecha de Entrega del Oficio: </strong>" + date_delivery + "</p></div>"
+							+ "<div><p><strong>Adjuntar Archivo PDFs: </strong>" + file_pdf + "</p></div><br>"
+							+ "<div><p><strong>Observaciones: </strong>" + document_answer + "</p></div>";
+
+						}
+						insertAfter(final_content, divOEntregado);
+					}
+
+
+
+				}
+		});
+
+		function insertAfter(e,i){
+				if(e.nextSibling){
+						e.parentNode.insertBefore(i,e.nextSibling);
+				} else {
+						e.parentNode.appendChild(i);
+				}
+		}
+}
+</script>
+{% load static %}
+<!--SCRIPT VALIDATES FIELDS-->
+<script type="text/javascript" src="{% static '/sco/js/jquery-1.11.0.min.js' %}"></script>
+<!--<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>-->
+<script type="text/javascript" src="{% static '/sco/js/jquery.validate.min.js' %}"></script>
+<!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js" charset="utf-8"></script>-->
+<script type="text/javascript" src="{% static '/sco/js/jquery-1.11.0.additional-methods.js' %}" charset="utf-8"></script>
+<!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.js" charset="utf-8"></script>-->
+<script type="text/javascript" src="{% static '/sco/js/validator_messages_es.js' %}"></script>
+<script type="text/javascript" src="{% static '/sco/js/validate-form-update.js' %}"></script>
+
+</script>
+{% endblock%}

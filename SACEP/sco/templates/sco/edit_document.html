@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+	<title>Editar Oficio</title>
+{% endblock %}
+{% block body %}
+
+<style >
+	th{
+	border-spacing: 5px 12px;
+	padding: 0 2px 1px 6px;
+  //border: 1px solid orange;
+	}
+
+
+	div .label{
+
+		//padding: 0 2px 1px 6px;
+		//border: 1px solid orange;
+		width: 18%;
+		padding: 10px;
+		display: inline-block;
+		font-weight: bold;
+	}
+	.input{
+		width: 25%;
+		padding: 10px;
+		display: inline-block;
+		//border: 1px solid orange;
+	}
+</style>
+<div class="container-fluid">
+	<strong><h5 style="text-align: center; font-size:160%; color:green">DATOS DEL OFICIO</h5></strong>
+	<hr>
+
+	<form class="form-horizontal" method="post">
+		{% csrf_token%}
+		<div class="container-fluid"style="">
+			<div class="label">{{ form1.name_person.label_tag }}</div>
+			<div class="input">{{ form1.name_person }}</div><br>
+			<div class="label">{{ form1.num_folio.label_tag }}</div>
+			<div class="input">{{ form1.num_folio }}</div><br>
+			<div class="label">{{ form2.name.label_tag}}</div>
+			<div class="input">{{ form2.name}}</div><br>
+			<div class="label">{{ form2.subtype.label_tag }}</div>
+			<div class="input">{{ form2.subtype }}</div>
+			<div class="label">{{ form2.limit_answer.label_tag }}</div>
+			<div class="input">{{ form2.limit_answer }}</div>
+			<hr>
+			<strong><h5 style="text-align: center; font-size:160%; color:green">DATOS DE LA AUTORIDAD (A LA QUE SE ENVIA)</h5></strong>
+			<hr>
+			<div class="label">{{ form3.name_authority.label_tag }}</div>
+			<div class="input">{{ form3.name_authority }}</div><br>
+			<div class="label">{{form2.end_days.label_tag}}</div>
+			<div class="label">{{form2.end_days}}</div><br>
+			<div style="margin-button: 15%" class="label">{{form3.description.label_tag}}</div>
+			<div class="input">{{form3.description}}</div>
+			<hr>
+			<strong><h5 style="text-align: center; font-size:160%; color:green">PROCESO DEL OFICIO	</h5></strong>
+			<hr>
+			<div class="label">{{form4.status.label_tag}}</div>
+			<div class="input">{{form4.status}}</div><br>
+			<div class="label">{{form4.manager_process.label_tag}}</div>
+			<div class="input">{{form4.manager_process}}</div><br>
+			<div class="label">{{form4.derivate_area.label_tag}}</div>
+			<div class="input">{{form4.derivate_area}}</div><br>
+			<div class="label">{{form4.description.label_tag}}</div>
+			<div class="input">{{form4.description}}</div>
+		</div>
+		<hr>
+		<br>
+		<button class="btn btn-success" type="submit" style="width:15%"><i class="far fa-save fa-1x"></i> Guardar</button>
+		<br><br><br>
+</div>
+{% load static %}
+<script type="text/javascript" src="{% static '/sco/js/dynamic_select_edit.js' %}"></script>
+
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<script type="text/javascript" src="{% static '/sco/js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static '/sco/js/document_register.js' %}"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!--<script type="text/javascript" src="{% static '/sco/js/autocomplete_fields_edit.js' %}"></script>-->
+<script type="text/javascript">
+
+	  console.log("entra a rellenar");
+	  var ipt_name_person = document.getElementById("id_name_person").setAttribute('value', "{{document.name_person|escapejs}}");
+	  var ipt_num_folio = document.getElementById("id_num_folio").setAttribute('value', "{{document.num_folio|escapejs}}");
+	  //var ipt_type_name = document.getElementById("name").setAttribute('value', "{{document.type.name|escapejs}}");
+
+	  for(var field in document){
+	    //name_person.value(field.name_person);
+
+	  }
+
+		var $j = jQuery.noConflict();
+		$j(function() {
+		 $j("#authority_name").autocomplete({
+			 source: "{% url 'get_authorities' %}",
+			 select: function (event, ui) { //item selected
+				 AutoCompleteSelectHandler(event, ui)
+			 },
+			 minLength: 2,
+		 });
+	 });
+
+	 function AutoCompleteSelectHandler(event, ui)
+	 {
+		 var selectedObj = ui.item;
+	 }
+
+
+
+
+
+</script>
+{% endblock %}

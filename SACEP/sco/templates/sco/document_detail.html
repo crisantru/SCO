@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block head %}
+	<title>Detalles Oficio</title>
+{% endblock %}
+
+{% block body %}
+<br>
+<div class="container">
+  <div class="jumbotron" style="height: 60%">
+    <h1 class="display-4" style="color: green">Información del Oficio: {{object.num_folio}}/{{object.consecutive}} </h1>
+    <hr class="my-4">
+    <p>
+       <strong>De Quien se solicita la Información: </strong>{{object.name_person}}{{a}}<br>
+       <strong>Tipo de Oficio: </strong>{{object.type.name}}<br>
+			 {% if object.type.name == "Pensiones_Alimenticias" %}
+			 		<strong>Beneficiario(a): </strong>{{object.type.pension.beneficiary}}<br>
+       		<strong>Submateria: </strong>{{object.type.pension.pension_type}}<br>
+					<strong>N° Juicio Ordinario: </strong>{{object.type.pension.ordinary_judg}}<br>
+					<strong>Disposición: </strong>{{object.type.pension.disposition_type}}<br>
+					<strong>Fecha de Efecto: </strong>{{object.type.pension.date_efect}}<br>
+			 {% endif %}
+       <strong>Fecha de Termino: </strong>{{object.type.date_answer}}<br>
+  </div>
+  <div class="jumbotron" style="height: 55%">
+    <h1 class="display-4" style="color: green">Información de la Autoridad</h1>
+    <hr class="my-4">
+    <p><strong>Autoridad: </strong>{{object.authority.name_authority}}<br>
+       <strong>Ciudad: </strong>{{object.authority.city}}<br>
+			 <strong>Categoria: </strong>{{object.authority.category}}<br>
+			 <strong>Dirección: </strong>{{object.authority.address}}<br>
+       <strong>Descripción: </strong>{{object.authority.observations}}
+    </p>
+  </div>
+  <div class="jumbotron" style="height: 75%">
+    <h1 class="display-4" style="color: green">Proceso de Oficio</h1>
+    <hr class="my-4">
+    <p><strong>Responsable del Tramite: </strong>{{object.process.manager_process}}<br>
+			<strong>Fecha de Registro al Sistema: </strong>{{object.register_date|date:" d F Y"}}<br>
+       <strong>Derivado A: </strong>{{object.process.derivate_area}}<br>
+       <strong>STATUS: </strong>{{object.process.status}}<br>
+			 <strong>Fecha de Envio/Autoridad: </strong>{{object.process.date_delivery}}<br>
+			 <strong>N° de Oficio de Respuesta: </strong>{{object.num_folio_anwser}}<br>
+			 <strong>Archivo: </strong><a href={{object.file_pdf}}>{{object.file_pdf}}</a><br>
+			 {% if object.type.name == "Pensiones_Alimenticias" %}
+			 	<strong>Observaciones: </strong>{{object.type.pension.observations}}<br>
+			 {% endif%}
+
+    </p>
+  </div>
+	{% if object.type.name != "Pensiones_Alimenticias"%}
+	  <div class="jumbotron" style="height: 55%">
+	    <h1 class="display-4" style="color: green">Respuesta del Oficio</h1>
+	    <hr class="my-4">
+	    <p><strong>N° de Oficio de Respuesta: </strong>{{object.num_folio_anwser}}<br>
+				 <strong>Respuesta de: </strong>{{object.process.answer }}<br>
+	       <strong>Archivo: </strong><a href={{file_path}}>{{object.file_pdf}}</a><br>
+	       <strong>Fecha de Entrega a la Autoridad: </strong>{{object.process.date_delivery}}<br>
+				 {% if object.type.name == "Informes_Autoridad"%}
+	       	<strong>Control Interno: </strong>{{object.type.internal_control}}<br>
+				 {% endif %}
+	       <strong>Anotaciones: </strong>{{object.process.description}}
+	    </p>
+	  </div>
+	{% endif %}
+  <br><br><br>
+</div>
+
+
+{% endblock %}

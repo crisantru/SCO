@@ -1,0 +1,556 @@
+<!--<h3>Sales Report - {{ today | date:"d/m/Y" }}</h3>-->
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Oficio N° {{document.num_folio}} {{document.name_person}}</title>
+    <style type="text/css">
+        @page {
+            size: Letter;
+            margin-top: 2cm;
+            margin-bottom: 2cm;
+            margin-left: 2cm;
+            margin-right: 2cm;
+        }
+    </style>
+    <style type="text/css">
+      @page{
+        @frame layout{
+          -pdf-frame-content: frame;
+          margin-top: 0.9cm;
+          margin-bottom: 1.7cm;
+          margin-left: 1.5cm;
+          margin-right: 1.3cm;
+          border: 1px solid black;
+        }
+        @frame top-title-left{
+          -pdf-frame-content: top-title-left;
+          margin-top: 0.9cm;
+          margin-bottom: 23.7cm;
+          margin-left: 1.5cm;
+          margin-right: 10.6cm;
+          border: 1px solid black;
+        }
+        @frame title-content{
+          -pdf-frame-content: title-content;
+          margin-top: 1.7cm;
+          margin-left: 4.3cm;
+          margin-right: 11.1cm;
+          margin-bottom: 24cm;
+        }
+        @frame top-title-right{
+          -pdf-frame-content: top-title-right;
+          margin-top: 0.9cm;
+          margin-bottom: 23.7cm;
+          margin-right: 1.3cm;
+          margin-left: 11cm;
+          border: 1px solid black;
+
+        }
+        @frame mid{
+          -pdf-frame-content: mid;
+          margin-top: 4.3cm;
+          margin-right: 5cm;
+          margin-left: 6.5cm;
+        }
+        @frame mid2{
+          -pdf-frame-content: mid2;
+          margin-top: 4.7cm;
+          margin-bottom: 15.6cm;
+          margin-left: 1.5cm;
+          margin-right: 10.6cm;
+          border: 1px solid black;
+        }
+        @frame mid3{
+          -pdf-frame-content: mid3;
+          margin-top: 4.7cm;
+          margin-bottom: 15.6cm;
+          margin-left: 11cm;
+          margin-right: 1.3cm;
+          border: 1px solid black;
+        }
+        @frame mid4{
+          -pdf-frame-content: mid4;
+          margin-top: 12.35cm;
+          margin-bottom: 12.8cm;
+          margin-left: 1.5cm;
+          margin-right: 1.3cm;
+          border: 1px solid black;
+
+        }
+        @frame mid5{
+          -pdf-frame-content: mid5;
+          margin-top: 15.15cm;
+          margin-bottom: 12.15cm;
+          margin-left: 1.5cm;
+          margin-right: 1.3cm;
+
+        }
+        @frame mid6{
+          -pdf-frame-content: mid6;
+          margin-top: 15.7cm;
+          margin-bottom: 11.7cm;
+          margin-left: 1.5cm;
+          margin-right: 1.3cm;
+          border: 1px solid black;
+        }
+        @frame mid7{
+          -pdf-frame-content: mid7;
+          margin-top: 16.24cm;
+          margin-bottom: 1.7cm;
+          margin-left: 1.5cm;
+          margin-right: 1.3cm;
+
+
+        }
+        @frame mid8{
+          -pdf-frame-content: mid8;
+          margin-top: 17.733cm;
+
+          margin-left: 1.5cm;
+          margin-right: 11.651cm;
+
+        }
+        @frame mid9{
+          -pdf-frame-content: mid9;
+          margin-top: 17.74cm;
+          margin-bottom: 1.7cm;
+          margin-left: 9.93cm;
+          margin-right: 6.95cm;
+          border: 1px solid black;
+        }
+        @frame mid10{
+          -pdf-frame-content: mid10;
+          margin-top: 17.75cm;
+          margin-bottom: 1.7cm;
+          margin-left: 14.65cm;
+          margin-right: 1.3cm;
+
+        }
+      }
+
+      table{
+        text-align: center;
+      }
+      td{
+        width: 20%;
+        margin-left: 5px;
+      }
+      .table1{
+        margin-top: 4px;
+      }
+      .table1 td{
+        width: 100%;
+        text-align: justify;
+        border: 1px solid black;
+        padding: 2px;
+        padding-bottom: 0px;
+      }
+      .table2 td{
+        width: 100%;
+        text-align: justify;
+        padding: 2px;
+        padding-bottom: 0px;
+      }
+      .table3 td{
+        text-align: left;
+        padding: 1px;
+
+      }
+      .table4 td{
+        width: 100%;
+        text-align: justify;
+        padding: 2px;
+        padding-bottom: 0px;
+        border: 1px solid black;
+        font-weight: bold;
+
+      }
+      .table5 td{
+        width: 100%;
+        text-align:left;
+        padding: 1px;
+        padding-bottom: 0px;
+        border: 1px solid black;
+        font-weight: bold;
+      }
+      .table8 td{
+
+        text-align: left;
+        padding: 2px;
+        padding-bottom: 0px;
+        border: 1px solid black;
+        font-weight: bold;
+      }
+
+
+
+    </style>
+</head>
+<body>
+  <div id="frame">
+    <div id="top-title-left">
+      <div style="margin-left: 10px;">
+        {% load static %}
+        <img src="{% static "sco/images/imss.jpeg" %}"  style="height: 100px; width: 100px;">
+      </div>
+    </div>
+    <div id="title-content"><p style="text-align: center; font-size: 13px;
+     font-weight: bold;">DELEGACIÓN VERACRUZ NORTE<br>
+      DEPARTAMENTO DELEGACIONAL<br>
+      {% if document.process.derivate_area == "Area Personal" %}
+        DE PERSONAL Y DESARROLLO
+      {% endif%}
+      {% if document.process.derivate_area == "Area Retiro Laboral" %}
+        OFICINA DE PRESTACIONES AL<br> PERSONAL
+        (RETIRO LABORAL)
+      {% endif %}
+      {% if document.process.derivate_area == "Area Prestaciones Economicas" %}
+        PRESTACIONES ECONOMICAS
+      {% endif %}
+    </p></div>
+    <div id="top-title-right">
+      <div style="text-align: center; ">
+        <p style="text-align:center; font-size: 12px; font-weight: bold;">
+          <br>OFICIO 31 02 22 4100/JC/{{num_folio_anwser}}<br>SOLICITUD DE PENSIÓN ALIMENTICIA</p>
+          <table align="center">
+            <tr>
+            {% if document.type.pension.pension_type == "Inclusión" %}
+              <td>X</td>
+            {% else %}
+              <td></td>
+            {% endif %}
+              <td>INCLUSIÓN</td>
+            </tr>
+            <tr>
+              {% if document.type.pension.pension_type == "Modificación" %}
+                <td>X</td>
+              {% else %}
+                <td></td>
+              {% endif %}
+              <td>MODIFICACIÓN</td>
+            </tr>
+            <tr>
+            {% if document.type.pension.pension_type == "Cancelación" %}
+              <td>X</td>
+            {% else %}
+              <td></td>
+            {% endif %}
+              <td>CANCELACIÓN</td>
+            </tr>
+          </table>
+      </div>
+    </div>
+    <div id="mid"><p style="font-size: 13px; padding: 1px; font-weight: bold;">PARA USO EXCLUSIVO DE LOS SERVICIOS JURIDICOS</p></div>
+    <div id="mid2">
+      <table class="table1">
+        <tr><td><strong>FECHA: </strong>{{document.register_date|date:" d F Y"}}</td></tr>
+        <tr><td><strong>JUZGADO: </strong>{{document.authority.name_authority}} {{document.authority.city}}</td></tr>
+        <tr><td><strong>JUICIO ORDINARIO CIVIL: </strong>{{document.type.pension.ordinary_judg}}</td></tr>
+        <tr><td><strong>BENEFICIARIA (O): </strong>{{document.type.pension.beneficiary}}<br></td></tr>
+        <tr><td><strong>DEMANDADO (A): </strong>{{document.name_person}}</td></tr>
+        <tr><td><strong>TIPO DE DISPOSICIÓN JUDICIAL: </strong>{{document.type.pension.disposition_type}}</td></tr>
+        <tr><td><strong>OFICIO ORIGINAL DE REFERENCIA: </strong>{{document.num_folio}}/{{document.consecutive}}</td></tr>
+        <tr><td><strong>EFECTO A PARTIR DEL: </strong>{{date_today|date:" d F Y"}}</td></tr>
+      </table>
+      <p style="margin-left: 5px; font-size: 9px;"><strong>OBSERVACIONES: </strong>{{ document.type.pension.observations }}</p>
+    </div>
+    <div id="mid3">
+      <br>
+      <div style="margin-left: 20px;">
+        <table class="table3">
+            <tr>
+              {% if pension == "1" %}
+                <td style="width: 10%; ">X</td>
+              {% else %}
+                <td style="width: 10%;"></td>
+              {% endif %}
+              <td style="width: 90%;"><strong>1. </strong>IMPORTE FIJO</td>
+            </tr>
+            <tr>
+              {% if pension == "2" %}
+                <td style="width: 10%;">X</td>
+              {% else %}
+                <td style="width: 10%;"></td>
+              {% endif %}
+              <td style="width: 90%;"><strong>2. </strong>SUELDO MAS CPTO. 11</td>
+            </tr>
+            <tr>
+              {% if pension == "3" %}
+                <td style="width: 10%;">X</td>
+              {% else %}
+                <td style="width: 10%;"></td>
+              {% endif %}
+              <td style="width: 90%;"><strong>3. </strong>SUELDO MÁS CPTO. 11, MAS PRESTACIONES FIJAS 12,<br>
+               13, 14, 15,16, 17, 18, 19, 20,22, 23, 50, 54, 55, 57, 58, 61,<br> 62 Y 63.</td>
+             </tr>
+            <tr>
+              {% if pension == "4" %}
+                <td style="width: 10%;">X</td>
+              {% else %}
+                <td style="width: 10%;"></td>
+              {% endif %}
+              <td style="width: 90%;"><strong>4. </strong>SUELDO MÁS CPTO. 11, MAS PRESTACIONES FIJAS 12,<br>
+              13, 14, 15,16, 17, 18, 19, 20,22, 23, 50, 54, 55, 57, 58, 61,<br> 62 Y 63.
+              MÁS CPTO EXTRAORDINARIOS 24, 29, 30, 32,<br> 33, 35, 37, 38 Y 48.<br><br>
+              PORCENTAJE O IMPORTE AGUINALDO.
+            </td>
+          </tr>
+        </table>
+        <hr>
+      </div>
+      <div style="margin-left: 20px;">
+        <table class="table3">
+          <tr>
+            {% if informe == "1" %}
+              <td style="width: 5%;">X</td>
+            {% else %}
+              <td style="width: 5%;"></td>
+            {% endif %}
+            <td style="width: 100%;"><strong></strong><ul><li>INFORMAR CUMPLIMIENTO</li></ul></td>
+          </tr>
+          <tr>
+            {% if informe == "2" %}
+              <td style="width: 5%;">X</td>
+            {% else %}
+              <td style="width: 5%;"></td>
+            {% endif %}
+            <td style="width: 100%;"><strong></strong><ul><li>INFORMAR SUELDO, PERCEPCIONES ORDINARIAS Y<br>
+          EXTRAORDINARIAS Y DEDUCCIONES DEL <br>DEMANDADO</li></ul></td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+    <br><br><br><br>
+    <div id="mid4">
+      <div  style="text-align: center; font-size: 13px; ">
+        <p style="padding: 3px; line-height: 1.2;"><strong>A t e n t a m e n t e.<br>
+        <br>_______________________________<br>Lic. Marco Antonio Madrid Valencia.</strong><br>Jefe del Departamento Contencioso.<br>
+        Delegación Regional Veracruz Norte.</p>
+      </div>
+    </div>
+    <div class="" style="position:relative; margin: 12.2cm, 0cm, 0cm, 16.2cm;">LIC. ROGC/YJRR</div>
+    <div id="mid5">
+      <p style="font-size: 13px; padding: 1px; font-weight: bold; text-align:center;">
+     PARA USO EXCLUSIVO DEL DEPTO. DELEGACIONAL DE PERSONAL</p></div>
+    <div id="mid6">
+       <p style="font-size: 10px; padding: 1px; font-weight: bold; text-align: justify; ">
+         DATOS DEL TRABAJADOR</p>
+     </div>
+    <div id="mid7">
+      <table class="table4">
+          <tr style="font-size: 7pt;">
+            <td style="border:none;">APELLIDO PATERNO</td>
+            <td style="border:none;">APELLIDO MATERNO</td>
+            <td style="border:none;">NOMBRE (S).</td>
+            <td>MATRICULA</td>
+          </tr>
+        </table>
+
+        <table class="table8">
+          <tr>
+            <td  style="width: 35%" >LUGAR DE ADSCRIPCIÓN:</td>
+            <td  style="width: 35%">NOMBRE DE LA DEPENDENCIA:</td>
+            <td  style="width: 30%">TIPO DE PENSIÓN:</td>
+          </tr>
+        </table>
+
+        <table class="table4">
+          <tr>
+            <td style="width: 45%">INCLUSIÓN CPTO. 155.</td>
+            <td style="width: 25%">EXCLUSIÓN CPTO. 155.</td>
+            <td style="width: 30%">INCLUSIÓN CPTO. 051.</td>
+          </tr>
+        </table>
+    </div>
+    <div id="mid8">
+      <table class="table4">
+        <tr>
+          <td style="width: 70%">FIJO.</td>
+          <td style="width: 30%">RETROACTIVO</td>
+        </tr>
+      </table>
+      <table class="table4">
+        <tr>
+          <td style="width: 50%">FUNCIÓN.</td>
+          <td style="width: 20%">3207.</td>
+          <td style="width: 30%">3207.</td>
+        </tr>
+        <tr>
+          <td style="width: 50%">NUMERO FOLIO.</td>
+          <td style="width: 20%"></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">MATRICULA.</td>
+          <td style="width: 20%"></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">NO. QUINCENAS</td>
+          <td style="width: 20%"></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td style="width: 50%"><br></td>
+          <td style="width: 20%"></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">FAMILIAR.</td>
+          <td style="width: 20%"></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">% DE PENSIÓN</td>
+          <td style="width: 20%"></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">% DE AGUINALDO</td>
+          <td style="width: 20%"></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td style="width: 50%">IMPORTE FIJO DE PENSIÓN</td>
+          <td style="width: 20%"></td>
+          <td style="width: 30%"></td>
+        </tr>
+        <tr>
+          <td style="width: 50%; height: 116px;">AJUSTE DE AGUINALDO<br><br><br><br></td>
+          <td style="width: 20%"></td>
+          <td style="width: 30%"></td>
+        </tr>
+
+      </table>
+    </div>
+    <div id="mid9">
+      <table class="table5">
+        <tr>
+          <td>FUNCIÓN.</td>
+          <td>3203.</td>
+        </tr>
+        <tr>
+          <td>NUMERO DE FOLIO.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>MATRICULA.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>CONCEPTO.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>IMPORTE CPTO.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>VENCIMIENTO.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>NO. DE CONTROL</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="height: 20px;"></td>
+          <td style="height: 20px;"></td>
+        </tr>
+      </table>
+      <p style="font-size: 9px; margin-left: 1px;">
+        <strong>NUMERO DE CONTROL.<br>FUNCIÓN: 3202: ANOTAR EL NUMERO<br> DE
+        CONTROL REGISTRADO EN EL CPTO.<br> QUE SE VA A INCLUIR. FUNCIÓN 3204:
+        ANOTAR LO  SIGUIENTE: 155 XX X. CLAVE CPTO. QUINCENA PROCESO
+        AÑO DE PROCESO (ULTIMO DIGITO)</strong></p>
+
+    </div>
+    <div id="mid10">
+      <table class="table5">
+        <tr>
+          <td>FUNCIÓN</td>
+          <td>3204.</td>
+        </tr>
+        <tr>
+          <td>NUMERO DE FOLIO.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>MATRICULA.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>CONCEPTO.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>CARGO INICIAL.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>NO. DE CONTROL.</td>
+          <td></td>
+        </tr>
+      </table>
+      <table class="table5">
+        <tr>
+          <td>DESCRIP</td>
+          <td>INICIO</td>
+          <td>DIA.</td>
+          <td>MES.</td>
+        </tr>
+      </table>
+      <table class="table5">
+        <tr>
+          <td>CIFRA CONTROL</td>
+          <td></td>
+        </tr>
+      <table class="table5">
+        <tr>
+          <td style="width: 20%">DIA.</td>
+          <td style="width: 20%">MES.</td>
+          <td style="width: 20%">AÑO.</td>
+          <td style="width: 40%"></td>
+        </tr>
+      </table>
+      <table class="table5">
+        <tr>
+          <td style="width: 20%; height:15px;"></td>
+          <td style="width: 20%; height:15px;"></td>
+          <td style="width: 20%; height:15px;"></td>
+          <td style="width: 40%; height:15px;"></td>
+        </tr>
+      </table>
+      <br><br>
+      <p style="margin-left: 3px; text-align:center;"><strong>RESPONSABLE DEL REPORTE.<br><br><br>
+        ____________________________________<br>
+      NOMBRE Y FIRMA</strong></p>
+    </div>
+
+
+  </div>
+
+
+
+
+  {% load static %}
+  <script type="text/javascript" src="{% static '/sco/js/pdf.js' %}"></script>
+  <script>
+  //windows.load necesario para que se ejecute addEventListener
+  //script esta siendo ejecutado antes de que se termine de renderizar
+  //el html
+   window.onload = function(){
+     var inclusion = document.getElementById('inclusion');
+     var subtype = "{{document.type.subtype|escapejs}}";
+     if(subtype.value == "Inclusiones"){
+       inclusion.value("X");
+     }
+
+   }
+
+  </script>
+
+</body>
+</html>

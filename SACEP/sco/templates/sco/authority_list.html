@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Tabla de Autoridades</title>
+{% endblock%}
+
+{% block body %}
+<div class="container-fluid">
+  <br><h1>Autoridades</h1>
+
+
+  <br><br><br>
+  <a class = "btn btn-outline-success" href="/sco/registrar_autoridad/">Nueva Autoridad</a>
+  <br><br>
+  <!--<a class="btn btn-info" href="/sco/registrar_autoridad/">Nuevo Autoridad</a>-->
+
+  <table class="table table-striped table-hover" style="font-size: 90%; text-align: center;">
+    <tr>
+      <th class = "table-success">#</th>
+      <th class = "table-success">Nombre de la Autoridad</th>
+      <th class = "table-success">Categoria</th>
+      <th class = "table-success">Ciudad</th>
+      <th class = "table-success">Dirección</th>
+      <th class = "table-success">Observaciones</th>
+    </tr>
+
+  {% for field in object_list %}
+    <tr>
+      <td>{{field.id_authority}}</td>
+      <td style="width: 18%;">{{field.name_authority}}</td>
+      <td style="width: 13%;">{{field.category}}</td>
+      <td style="width: 10%;">{{field.city}}</td>
+      <td style="width: 15%;">{{field.address}}</td>
+      <td>{{field.observations}}</td>
+
+      <!--<td class="table-danger"><a href="{% url 'authority_detail' field.id_authority %}">Detalles</a></td>,-->
+      <td class="table-success"><a href="{% url 'authority_edit' field.id_authority %}">Editar</a></td>
+      <td class="table-success"><a href="{% url 'authority_delete' field.id_authority %}">Eliminar</a></td>
+    </tr>
+
+  {% endfor %}
+  </table>
+</div>
+
+{% endblock %}

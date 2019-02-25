@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block head %}
+  <title>Registrar Usuario</title>
+  <style>
+    .error {
+      color: #F00;
+      background-color: #FFF;
+      }
+  </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+      <br><h1>Nuevo Usuario</h1><br>
+  		<h4 style="color: green">Datos Personales</h4>
+  		<hr>
+      <form action="{% url 'register_user' %}" method="post" id="myForm">
+  			{% csrf_token %}
+        <div class="">{{form.name}}</div><br>
+        <div class="">{{form.lastNameP}}</div><br>
+        <div class="">{{form.lastNameM}}</div><br>
+        <div class="">{{form.email}}</div><br><br>
+        <h4 style="color: green">Datos de la cuenta</h4>
+    		<hr>
+        <div class="">{{form.username}}</div><br>
+        <div class="">{{form.type_account}}</div><br>
+        <div class="">{{form.password1}}</div><br>
+        <div class="">{{form.password2}}</div><br>
+        <div class="">{{form.is_superuser.label_tag}} {{form.is_superuser}}</div><br>
+        <div><button class="btn btn-success" type="submit" style="width:15%"><i class="fa fa-user-plus">
+				</i> Guardar</button></div>
+    </div><br><br>
+    {% load static %}
+    <script type="text/javascript" src="{% static '/sco/js/jquery-1.11.0.min.js' %}"></script>
+    <!--<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>-->
+    <script type="text/javascript" src="{% static '/sco/js/jquery.validate.min.js' %}"></script>
+    <!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js" charset="utf-8"></script>-->
+    <script type="text/javascript" src="{% static '/sco/js/jquery-1.11.0.additional-methods.js' %}" charset="utf-8"></script>
+    <!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.js" charset="utf-8"></script>-->
+    <script type="text/javascript" src="{% static '/sco/js/validator_messages_es.js' %}"></script>
+    <script type="text/javascript" src="{% static '/sco/js/validate_form_user.js' %}"></script>
+{% endblock %}

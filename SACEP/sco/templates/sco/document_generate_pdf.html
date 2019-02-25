@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style >
+  div .label{
+    width: 20%;
+    padding: 10px;
+    display: inline-block;
+    font-weight: bold;
+  }
+  .input{
+    width: 30%;
+    padding: 10px;
+    display: inline-block;
+  }
+
+</style>
+
+<br>
+  <div class="container-fluid">
+    <h2>Datos Generales del Oficio</h2>
+    <hr>
+    <div class="alert alert-primary" role="alert">
+      <h3>Oficio N°: {{document.num_folio}}</h3>
+      <p><strong>De Quien se Solicita la Información:  </strong><strong style="font-size: 2em">{{document.name_person}}</strong><br>
+         <strong>Tipo de Oficio: </strong>{{document.type.name}}<br>
+         <strong>Submateria: </strong>{{document.type.subtype}}<br>
+         <strong>Autoridad: </strong><strong style="font-size: 1em">{{document.authority.name_authority}}</strong>
+       </p>
+      <hr>
+      <p class="mb-0">
+        <strong>Fecha de Entrega: </strong>{{document.process.date_delivery}}<br>
+        <strong>N° de Control Interno: </strong>{{document.type.internal_control}}<br></p>
+    </div><br>
+    <hr>
+  </div>
+
+
+
+  <br><br><br><br>
+{% endblock %}

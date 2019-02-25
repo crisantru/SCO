@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Registrar Autoridad</title>
+{% endblock%}
+
+{% block body %}
+<style >
+	.error {
+		color: #F00;
+		background-color: #FFF;
+		}
+
+		div .label{
+
+			//padding: 0 2px 1px 6px;
+			//border: 1px solid orange;
+			width: 18%;
+			padding: 10px;
+			display: inline-block;
+			font-weight: bold;
+		}
+		.input{
+
+			padding: 10px;
+			display: inline-block;
+			//border: 1px solid orange;
+		}
+</style>
+<div class="container-fluid">
+	<br><br><h1>Datos de Autoridad</h1>
+	<hr>
+	<br>
+		<form action="{% url 'register_authority' %}" id="post_authority" class="form-horizontal" method="post">
+			{% csrf_token%}
+			<div class="label">* {{ form.category.label_tag }}</div>
+			<div class="input" style="width: 22%">{{ form.category }}</div><br>
+			<div class="label">* {{ form.name_authority.label_tag }}</div>
+			<div class="input" style="width: 70%">{{ form.name_authority }}</div><br>
+			<div class="label">* {{ form.city.label_tag }}</div>
+			<div class="input" style="width: 22%">{{ form.city }}</div><br>
+			<div class="label">{{ form.address.label_tag }}</div>
+			<div class="input" style="width: 70%">{{ form.address }}</div><br>
+			<div class="label">{{ form.observations.label_tag }}</div>
+			<div class="input"  style="width: 70%">{{ form.observations }}</div><br><br>
+			<div style="color: red"><i>* Campos Obligatorios</i></div>
+			<br>
+			<button class="btn btn-success" type="submit" style="width:10%"><i class="far fa-save fa-1x"></i> Guardar</button>
+			<br><br><br>
+</div>
+{% load static %}
+<script type="text/javascript" src="{% static '/sco/js/jquery-1.11.0.min.js' %}"></script>
+<!--<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>-->
+<script type="text/javascript" src="{% static '/sco/js/jquery.validate.min.js' %}"></script>
+<!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js" charset="utf-8"></script>-->
+<script type="text/javascript" src="{% static '/sco/js/jquery-1.11.0.additional-methods.js' %}" charset="utf-8"></script>
+<!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.js" charset="utf-8"></script>-->
+<script type="text/javascript" src="{% static '/sco/js/validator_messages_es.js' %}"></script>
+<script type="text/javascript" src="{% static '/sco/js/validate_form_authority.js' %}"></script>
+
+{% endblock %}
