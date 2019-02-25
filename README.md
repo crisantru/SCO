@@ -16,22 +16,22 @@
 
 ### Inicio
 <p align="center">
-  <img width="720" height="320" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076498/images/sacep/1.png">
+  <img width="720" height="480" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076498/images/sacep/1.png">
 </p>
 
 ### Generar Oficio
 <p align="center">
-  <img width="720" height="320" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076498/images/sacep/3.png">
+  <img width="720" height="480" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076498/images/sacep/3.png">
 </p>
 
 ### Nueva Autoridad
 <p align="center">
-  <img width="720" height="320" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076498/images/sacep/4.png">
+  <img width="720" height="480" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076498/images/sacep/4.png">
 </p>
 
 ### Tabla Gral. De Oficios
 <p align="center">
-  <img width="720" height="320" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076693/images/sacep/sss.png">
+  <img width="720" height="480" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076693/images/sacep/sss.png">
 </p>
 
 ### Gestión Oficio
@@ -41,7 +41,7 @@
 
 ### Buscar Oficio
 <p align="center">
-  <img width="720" height="320" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076693/images/sacep/sss1.png">
+  <img width="720" height="480" src="https://res.cloudinary.com/hup2qfvwn/image/upload/v1551076693/images/sacep/sss1.png">
 </p>
 
 
